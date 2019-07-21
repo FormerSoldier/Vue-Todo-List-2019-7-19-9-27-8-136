@@ -18,17 +18,42 @@
                 <div id="button" @Click="addItem">Add</div>
             </div>
             <br />
-            <ol>
-                <list-item v-for="item in list" 
-                            :content="item"></list-item>
-                 <!-- <li v-for="item in list" class="checked">
-                    <input name="done-todo" type="checkbox" class="done-todo">
-                    <span>内容</span>
-                </li>  -->
-            </ol>
+            <div>
+                <ol>
+                    <list-item v-for="item in list" 
+                                :content="item"></list-item>
+                </ol>
+            </div>
+
+            <div>
+                <ul id="filters">
+                    <my-filter v-for="item in filterList" 
+                                :item="item"></my-filter>
+                </ul>
+            </div>
         </div>
         
         <script>
+            var myFilter ={
+                //el:'#filterGroup',
+                props:['item'],               
+                template:
+                    '<li>' + 
+                        '<a href="#" data-filter="all" @click="btnClick">{{item}}</a>' +
+                    '</li>',
+                data: function(){
+                    return{
+                        
+                    } 
+                },
+                methods:{
+                    btnClick: function(){
+                        
+                    }
+                }
+            };
+
+
             var listItem = {
                 props:['content'],           
                 template:
@@ -38,7 +63,7 @@
                 '</li>',
                 data: function(){
                     return{
-                        checked: ''
+                        checked: '',
                     }
                 },
                 methods:{
@@ -52,7 +77,8 @@
                 el:'#container',
                 data:{
                     inputValue: '',
-                    list: []
+                    list: [],
+                    filterList: ['All','Active','Complete']
                 },
                 methods:{
                     addItem: function(){
@@ -60,8 +86,14 @@
                         this.inputValue = '';
                     }
                 },
+                computed:{
+                    /*filterList: function(){
+                        
+                    }*/
+                },
                 components:{
-                    ListItem: listItem
+                    ListItem: listItem,
+                    MyFilter: myFilter
                 }
             });
         </script>
