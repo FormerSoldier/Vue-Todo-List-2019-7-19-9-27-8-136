@@ -13,7 +13,7 @@
                     <em>Simple Todo List with adding and filter by diff status.</em>
                 </p>
             </div>
-            <div >
+            <div>
                 <input v-model="inputValue" class="input-text" type="text" name="ListItem">
                 <div id="button" @Click="addItem">Add</div>
             </div>
@@ -30,12 +30,22 @@
         
         <script>
             var listItem = {
-                props:['content'],
+                props:['content'],           
                 template:
-                '<li>' + 
-                    '<input name="done-todo" type="checkbox">' +
+                '<li :class="[checked]">' + 
+                    '<input name="done-todo" type="checkbox" @click="checkedItem" class = "doneTodo">' +
                     '<span>{{content}}</span>' +
-                '</li>'
+                '</li>',
+                data: function(){
+                    return{
+                        checked: ''
+                    }
+                },
+                methods:{
+                    checkedItem: function(){
+                        this.checked = this.checked === 'checked' ? '' : 'checked';
+                    }
+                }
             };
 
             var container = new Vue({
